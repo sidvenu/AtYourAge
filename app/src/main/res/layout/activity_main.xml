@@ -1,73 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="12dp"
+    android:orientation="vertical"
+    tools:context="io.github.sidvenu.atyourage.MainActivity">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/helvetica_bold"
+        android:text="@string/app_name"
+        android:textColor="@color/title"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/helvetica_bold"
+        android:text="@string/born_on"
+        android:textColor="@color/subtitle"
+        android:textSize="9.69946359sp" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="12dp"
-        android:orientation="vertical"
-        tools:context="io.github.sidvenu.atyourage.MainActivity">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:baselineAligned="true">
 
         <TextView
+            android:id="@+id/born_on_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:fontFamily="@font/helvetica_bold"
-            android:text="@string/app_name"
-            android:textColor="@color/title"
-            android:textSize="50sp" />
+            android:textColor="@color/black"
+            android:textSize="24.248659sp"
+            tools:text="September 15, 2000" />
 
         <TextView
+            android:id="@+id/change_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_alignBaseline="@id/born_on_text_view"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:fontFamily="@font/helvetica_bold"
-            android:text="@string/born_on"
-            android:textColor="@color/subtitle"
-            android:textSize="9.69946359sp" />
+            android:gravity="end"
+            android:text="@string/change"
+            android:textColor="@color/changeColor"
+            android:textSize="9.69946359sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:baselineAligned="true">
-
-            <TextView
-                android:id="@+id/born_on_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/helvetica_bold"
-                android:textColor="@color/black"
-                android:textSize="24.248659sp"
-                tools:text="September 15, 2000" />
-
-            <TextView
-                android:id="@+id/change_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/born_on_text_view"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:fontFamily="@font/helvetica_bold"
-                android:gravity="end"
-                android:text="@string/change"
-                android:textColor="@color/changeColor"
-                android:textSize="9.69946359sp"
-                tools:ignore="RelativeOverlap" />
-        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/result_view_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <TextView
@@ -107,13 +110,15 @@
                 android:paddingRight="3dp"
                 android:scrollbarStyle="outsideOverlay" />
         </LinearLayout>
-    </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminate="true" />
-</RelativeLayout>
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/material_progress_bar"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingBottom="50dp"
+            android:indeterminate="true"
+            app:mpb_progressStyle="horizontal" />
+    </RelativeLayout>
+</LinearLayout>

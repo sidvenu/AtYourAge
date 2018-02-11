@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.text.Html
 import android.view.View
 import android.widget.DatePicker
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
@@ -24,16 +26,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val adapter = ResultAdapter(this, ArrayList())
         (findViewById<ListView>(R.id.results_list_view)).adapter = adapter
+        var currentDayOfMonth = 0
+        var currentMonth = 0
+        var currentYear = 0
 
         val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val cal: Calendar = Calendar.getInstance()
             cal.set(year, month, dayOfMonth)
+            currentDayOfMonth = dayOfMonth
+            currentMonth = month
+            currentYear = year
             (findViewById<TextView>(R.id.born_on_text_view)).text = getFormattedDate(cal.time, "MMMM d, yyyy")
             AgeGeekParser(findViewById(R.id.root_layout), adapter).execute(getFormattedDate(cal.time, "MMMM-d-yyyy"))
         }
         dateListener.onDateSet(DatePicker(this), 2000, 8, 15)
         findViewById<TextView>(R.id.change_text_view).setOnClickListener {
-            DatePickerDialog(this, dateListener, 2000, 8, 15).show()
+            DatePickerDialog(this, dateListener, currentYear, currentMonth, currentDayOfMonth).show()
         }
 
     }
@@ -45,7 +53,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private class AgeGeekParser(root: View, val adapter: ResultAdapter) : AsyncTask<String, Unit, ArrayList<String>>() {
-        private val textViewRef: WeakReference<TextView>? = WeakReference(root.findViewById(R.id.born_on_text_view))
+        private val textViewRef: WeakReference<TextView>? = WeakReference(root.findViewById(R.id.age_text_view))
+        private val progressBar: WeakReference<MaterialProgressBar>? = WeakReference(root.findViewById(R.id.material_progress_bar))
+        private val resultViewGroup: WeakReference<LinearLayout>? = WeakReference(root.findViewById(R.id.result_view_group))
+
+        override fun onPreExecute() {
+            resultViewGroup?.get()?.visibility = View.GONE
+            progressBar?.get()?.visibility = View.VISIBLE
+        }
 
         override fun doInBackground(vararg params: String?): ArrayList<String> {
             val url: String = "https://www.agegeek.com/" + params[0]!!
@@ -72,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                 val text = result.substringAfter("<strong>").substringBefore("</strong>")
                 if (!text.equals("Today", true)) {
                     number_of_days = text.substringAfter("In ").substringBefore(" days")
+                    desc.append("<strong>days from now</strong>")
                 } else desc.append("<strong>Today</strong>")
 
                 desc.append(
@@ -81,6 +97,8 @@ class MainActivity : AppCompatActivity() {
                 )
                 adapter.add(Result(number_of_days, Html.fromHtml(desc.toString())))
             }
+            resultViewGroup?.get()?.visibility = View.VISIBLE
+            progressBar?.get()?.visibility = View.GONE
         }
     }
 }

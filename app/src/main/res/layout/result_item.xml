@@ -15,7 +15,7 @@
         android:layout_marginRight="10dp"
         android:fontFamily="@font/helvetica_bold"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/numberOfDaysColor"
         android:textSize="50sp"
         tools:text="9" />
 
