@@ -117,8 +117,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingBottom="50dp"
             android:indeterminate="true"
+            android:paddingBottom="50dp"
             app:mpb_progressStyle="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/error_view_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/internet_connection_problem"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/refresh_view"
+                android:layout_marginTop="10dp"
+                android:padding="2dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:contentDescription="@string/refresh"
+                android:src="@drawable/refresh" />
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
