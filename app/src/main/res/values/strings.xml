@@ -4,6 +4,6 @@
     <string name="change">CHANGE</string>
     <string name="age">AGE</string>
     <string name="at_your_age">AT YOUR AGE</string>
-    <string name="internet_connection_problem">There was an error in your internet connection. Please check your internet connection and try refreshing</string>
+    <string name="internet_connection_problem">There was a problem in connecting to the internet. Please check your internet connection and try refreshing</string>
     <string name="refresh">refresh</string>
 </resources>
