@@ -15,6 +15,7 @@ import org.jsoup.select.Elements
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.net.ssl.HttpsURLConnection
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        HttpsURLConnection.setDefaultSSLSocketFactory(TLSSocketFactory())
+
         val adapter = ResultAdapter(this, ArrayList())
         (findViewById<ListView>(R.id.results_list_view)).adapter = adapter
 
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                 val elements: Elements = doc.getElementsByClass("mobile-event")
                 elements.mapTo(list) { it.html() }
             } catch (e: Exception) {
+                e.printStackTrace()
                 return null
             }
             return list
