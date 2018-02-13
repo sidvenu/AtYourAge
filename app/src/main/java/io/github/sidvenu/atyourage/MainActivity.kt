@@ -2,6 +2,7 @@ package io.github.sidvenu.atyourage
 
 import android.app.DatePickerDialog
 import android.os.AsyncTask
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             return list
         }
 
+        @Suppress("DEPRECATION")
         override fun onPostExecute(results: ArrayList<String>?) {
             textViewRef?.get()?.text = results?.get(0)
             results?.removeAt(0)
@@ -104,13 +106,13 @@ class MainActivity : AppCompatActivity() {
                 errorViewGroup?.get()?.visibility = View.VISIBLE
             } else {
                 for (result: String in results) {
-                    var number_of_days = "X"
+                    var numberOfDays = "X"
                     val desc = StringBuilder()
 
                     val text = result.substringAfter("<strong>").substringBefore("</strong>")
                     if (!text.equals("Today", true)) {
-                        number_of_days = text.substringAfter("In ").substringBefore(" day")
-                        if (Integer.parseInt(number_of_days) == 1)
+                        numberOfDays = text.substringAfter("In ").substringBefore(" day")
+                        if (Integer.parseInt(numberOfDays) == 1)
                             desc.append("<strong>day from now</strong>")
                         else desc.append("<strong>days from now</strong>")
                     } else desc.append("<strong>Today</strong>")
@@ -120,7 +122,10 @@ class MainActivity : AppCompatActivity() {
                                     .replace("<span class=\"person\">", "<strong>")
                                     .replace("</span>", "</strong>")
                     )
-                    adapter.add(Result(number_of_days, Html.fromHtml(desc.toString())))
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        adapter.add(Result(numberOfDays, Html.fromHtml(desc.toString(), Html.FROM_HTML_MODE_LEGACY)))
+                    else
+                        adapter.add(Result(numberOfDays, Html.fromHtml(desc.toString())))
                 }
                 resultViewGroup?.get()?.visibility = View.VISIBLE
             }
